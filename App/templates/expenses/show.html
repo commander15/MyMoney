@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="ms-4">
+    <div class="form-floating mb-3">
+        <input class="form-control" id="inputEmail" type="text" name="label" value="{{ expense.label }}" />
+        <label for="inputEmail">Label</label>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="form-floating mb-3 mb-md-0">
+                <p class="form-control">{{ expense.date }}</p>
+                <label for="inputFirstName">Date</label>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-floating">
+                <p class="form-control" id="inputLastName">{{ expense.time }}</p>
+                <label for="inputLastName">Time</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-floating mb-3">
+        <p class="form-control" >{{ expense.budget }}</p>
+        <label for="inputEmail">Budget</label>
+    </div>
+
+    <div class="card">
+        <div class="card-header col">
+            <i class="fas fa-table me-1"></i> Items
+        </div>
+        <div class="card-body">
+            <table id="datatablesSimple">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in expense.items.all %}
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.amount }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

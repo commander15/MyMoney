@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card mb-4 ms-4">
+    <div class="card-header col">
+        <i class="fas fa-table me-1"></i> Expenses
+        <a href="{% url 'expenses' %}/add"><button class="btn btn-success ml-auto">Add</button></a>
+    </div>
+    <div class="card-body">
+        <table id="datatablesSimple">
+            <thead>
+                <tr>
+                    <th>Label</th>
+                    <th>Amount</th>
+                    <th>Budget</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Operations</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for expense in expenses %}
+                <tr>
+                    <td><a href="{% url 'expenses' %}/{{ expense.id }}/show">{{ expense.label }}</a></td>
+                    <td>{{ expense.amount }}</td>
+                    <td>{{ expense.budget }}</td>
+                    <td>{{ expense.date }}</td>
+                    <td>{{ expense.time }}</td>
+                    <td>
+                        <center>
+                            <a class="mb-4" href="{% url 'expenses' %}/{{ expense.id }}/show"><button class="btn btn-primary">Show</button></a>
+                            <a class="mb-4" href="{% url 'expenses' %}/{{ expense.id }}/edit"><button class="btn btn-warning">Update</button></a>
+                            <a class="mb-4" href="{% url 'expenses' %}/{{ expense.id }}/delete"><button class="btn btn-danger">Delete</button></a>
+                        </center>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
