@@ -38,7 +38,11 @@ def registerUser(request: HttpRequest):
 
 @login_required
 def dashboard(request: HttpRequest):
-    return render(request, "Dashboard", "Dashboard", "base.html")
+    expenses = Expense.objects.all();
+
+    context = dict()
+    context['expenses'] = expenses
+    return render(request, "Dashboard", "Your expenses on a graph !", "dashboard.html", context)
 
 @login_required
 def showExpenses(request: HttpRequest):
@@ -92,3 +96,41 @@ def editExpense(request: HttpRequest, id: int):
 def deleteExpense(request: HttpRequest, id: int):
     Expense.objects.get(id=id).delete()
     return redirect('expenses')
+
+@login_required
+def addExpenseItem(request: HttpRequest, expenseId: int):
+    if (request.method == "GET"):
+        context = dict()
+        context['xtitle'] = "Expenses"
+        context['expense'] = Expense.objects.get(id=expenseId)
+        return render(request, "Add Expense Item", "New expense item is comming out !", "expenses/items/add.html", context)
+    else:
+        form = ExpenseItemForm(request.POST)
+        if (form.is_valid()):
+            form.instance.expense_id = expenseId
+            form.save()
+            return redirect('edit_expense', id=expenseId)
+        
+    return HttpResponse("Bad Request !")
+
+@login_required
+def editExpenseItem(request: HttpRequest, expenseId: int, itemId: int):
+    item = ExpenseItem.objects.get(id=itemId)
+    if (request.method == "GET"):
+        context = dict()
+        context['xtitle'] = "Expenses"
+        context['expense'] = Expense.objects.get(id=expenseId)
+        context['item'] = item
+        return render(request, "Edit Item", "Edit Expense Item !", "expenses/items/edit.html", context)
+    else:
+        form = ExpenseItemForm(request.POST, instance=item)
+        if (form.is_valid()):
+            form.save()
+            return redirect("edit_expense", id=expenseId)
+        
+    return HttpResponse("Bad Request !")
+
+@login_required
+def deleteExpenseItem(request: HttpRequest, expenseId: int, itemId: int):
+    ExpenseItem.objects.get(id=itemId).delete()
+    return redirect("edit_expense", id=expenseId)

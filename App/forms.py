@@ -14,3 +14,8 @@ class ExpenseCreationForm(ModelForm):
     class Meta:
         model = Expense
         fields = [ 'label', 'budget' ]
+
+class ExpenseItemForm(ModelForm):
+    class Meta:
+        model = ExpenseItem
+        fields = [ 'name', 'amount' ]

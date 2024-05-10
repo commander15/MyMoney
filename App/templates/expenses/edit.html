@@ -41,7 +41,7 @@
                                     <div class="card mb-3">
                                         <div class="card-header">
                                             <i class="fas fa-table"></i> <span>Items</span>
-                                            <a href="{% url 'expenses' %}/add"><button class="btn btn-success ml-auto">Add</button></a>
+                                            <a href="{% url 'expenses' %}/{{ expense.id }}/items/add"><button class="btn btn-success ml-auto">Add</button></a>
                                         </div>
                                         <div class="card-body">
                                             <table id="datatablesSimple">
@@ -59,8 +59,8 @@
                                                         <td>{{ item.amount }}</td>
                                                         <td>
                                                             <center>
-                                                                <a class="btn btn-warning">Update</a>
-                                                                <a class="btn btn-danger">Delete</a>
+                                                                <a class="btn btn-warning" href="{% url 'expenses' %}/{{ expense.id }}/items/{{ item.id }}/edit">Update</a>
+                                                                <a class="btn btn-danger" href="{% url 'expenses' %}/{{ expense.id }}/items/{{ item.id }}/delete">Delete</a>
                                                             </center>
                                                         </td>
                                                     </tr>
